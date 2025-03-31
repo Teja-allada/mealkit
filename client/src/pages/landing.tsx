@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 import { insertWaitlistSchema } from "@shared/schema";
 import { 
   Form,
@@ -98,7 +97,7 @@ export default function LandingPage() {
                   Join Waitlist
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg" asChild>
-                  <Link href="/"><span>Browse Recipes</span></Link>
+                  <Link href="/menu"><span>Browse Recipes</span></Link>
                 </Button>
               </div>
             </div>
@@ -174,57 +173,63 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Dish previews */}
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <img
-                src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398"
-                alt="Butter Chicken"
-                className="w-full h-48 object-cover"
-              />
-              <CardContent className="p-4">
-                <h3 className="text-xl font-semibold mb-2">Butter Chicken</h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Rich and creamy curry with tender chicken in a mildly spiced tomato sauce.
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="text-orange-600 font-semibold">₹399.00</div>
-                  <Button variant="outline" size="sm" disabled>Coming Soon</Button>
-                </div>
-              </CardContent>
+              <Link href="/recipe/1">
+                <img
+                  src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398"
+                  alt="Butter Chicken"
+                  className="w-full h-48 object-cover"
+                />
+                <CardContent className="p-4">
+                  <h3 className="text-xl font-semibold mb-2">Butter Chicken</h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Rich and creamy curry with tender chicken in a mildly spiced tomato sauce.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="text-orange-600 font-semibold">₹399.00</div>
+                    <Button variant="outline" size="sm">View Recipe</Button>
+                  </div>
+                </CardContent>
+              </Link>
             </Card>
             
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <img
-                src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc"
-                alt="Masala Dosa"
-                className="w-full h-48 object-cover"
-              />
-              <CardContent className="p-4">
-                <h3 className="text-xl font-semibold mb-2">Masala Dosa</h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Crisp fermented rice pancake stuffed with spiced potato filling.
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="text-orange-600 font-semibold">₹149.00</div>
-                  <Button variant="outline" size="sm" disabled>Coming Soon</Button>
-                </div>
-              </CardContent>
+              <Link href="/recipe/2">
+                <img
+                  src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc"
+                  alt="Masala Dosa"
+                  className="w-full h-48 object-cover"
+                />
+                <CardContent className="p-4">
+                  <h3 className="text-xl font-semibold mb-2">Masala Dosa</h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Crisp fermented rice pancake stuffed with spiced potato filling.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="text-orange-600 font-semibold">₹149.00</div>
+                    <Button variant="outline" size="sm">View Recipe</Button>
+                  </div>
+                </CardContent>
+              </Link>
             </Card>
             
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <img
-                src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6"
-                alt="Paneer Tikka"
-                className="w-full h-48 object-cover"
-              />
-              <CardContent className="p-4">
-                <h3 className="text-xl font-semibold mb-2">Paneer Tikka</h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Chunks of cottage cheese marinated with spices and grilled to perfection.
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="text-orange-600 font-semibold">₹249.00</div>
-                  <Button variant="outline" size="sm" disabled>Coming Soon</Button>
-                </div>
-              </CardContent>
+              <Link href="/recipe/3">
+                <img
+                  src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6"
+                  alt="Paneer Tikka"
+                  className="w-full h-48 object-cover"
+                />
+                <CardContent className="p-4">
+                  <h3 className="text-xl font-semibold mb-2">Paneer Tikka</h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Chunks of cottage cheese marinated with spices and grilled to perfection.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="text-orange-600 font-semibold">₹249.00</div>
+                    <Button variant="outline" size="sm">View Recipe</Button>
+                  </div>
+                </CardContent>
+              </Link>
             </Card>
           </div>
         </div>
