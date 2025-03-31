@@ -163,7 +163,7 @@ export default function RecipePage() {
                 Only highlighted ingredients can be customized.
               </p>
               <div className="space-y-3">
-                {recipe.ingredients.map((ingredient, index) => (
+                {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div 
@@ -197,7 +197,7 @@ export default function RecipePage() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Ingredients</h2>
           <ul className="space-y-2">
-            {recipe.ingredients.map((ingredient, index) => (
+            {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-2" />
                 <span>
@@ -211,7 +211,7 @@ export default function RecipePage() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Instructions</h2>
           <ol className="space-y-4">
-            {recipe.instructions.map((step, index) => (
+            {recipe.instructions && recipe.instructions.map((step, index) => (
               <li key={index} className="flex gap-4">
                 <span className="font-semibold text-orange-500 flex-shrink-0">
                   {index + 1}.

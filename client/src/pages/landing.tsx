@@ -173,7 +173,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Dish previews */}
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <Link href="/recipe/1">
+              <div onClick={() => window.location.href = '/recipe/1'} className="cursor-pointer">
                 <img
                   src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398"
                   alt="Butter Chicken"
@@ -186,14 +186,17 @@ export default function LandingPage() {
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="text-orange-600 font-semibold">₹399.00</div>
-                    <Button variant="outline" size="sm">View Recipe</Button>
+                    <Button variant="outline" size="sm" onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = '/recipe/1';
+                    }}>View Recipe</Button>
                   </div>
                 </CardContent>
-              </Link>
+              </div>
             </Card>
             
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <Link href="/recipe/2">
+              <div onClick={() => window.location.href = '/recipe/2'} className="cursor-pointer">
                 <img
                   src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc"
                   alt="Masala Dosa"
@@ -206,14 +209,17 @@ export default function LandingPage() {
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="text-orange-600 font-semibold">₹149.00</div>
-                    <Button variant="outline" size="sm">View Recipe</Button>
+                    <Button variant="outline" size="sm" onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = '/recipe/2';
+                    }}>View Recipe</Button>
                   </div>
                 </CardContent>
-              </Link>
+              </div>
             </Card>
             
             <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <Link href="/recipe/3">
+              <div onClick={() => window.location.href = '/recipe/3'} className="cursor-pointer">
                 <img
                   src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6"
                   alt="Paneer Tikka"
@@ -226,10 +232,13 @@ export default function LandingPage() {
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="text-orange-600 font-semibold">₹249.00</div>
-                    <Button variant="outline" size="sm">View Recipe</Button>
+                    <Button variant="outline" size="sm" onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = '/recipe/3';
+                    }}>View Recipe</Button>
                   </div>
                 </CardContent>
-              </Link>
+              </div>
             </Card>
           </div>
         </div>
