@@ -1,81 +1,8 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
-import { insertWaitlistSchema } from "@shared/schema";
-import { 
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 
-// Extend the schema with validation
-const waitlistFormSchema = insertWaitlistSchema.extend({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  phone: z.string().min(10, {
-    message: "Phone number must be at least 10 digits.",
-  }).optional(),
-});
-
-type WaitlistFormValues = z.infer<typeof waitlistFormSchema>;
-
 export default function LandingPage() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const form = useForm<WaitlistFormValues>({
-    resolver: zodResolver(waitlistFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    },
-  });
-
-  async function onSubmit(data: WaitlistFormValues) {
-    setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      
-      if (!response.ok) {
-        throw new Error("Failed to join waitlist");
-      }
-      
-      setIsSubmitted(true);
-      toast({
-        title: "Success!",
-        description: "You've been added to our waitlist. We'll notify you when we launch!",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to join waitlist. Please try again later.",
-        variant: "destructive",
-      });
-    }
-    setIsSubmitting(false);
-  }
-
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -84,27 +11,22 @@ export default function LandingPage() {
           <div className="flex flex-col lg:flex-row items-center">
             <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-10">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
-                <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Authentic Indian Cuisine</span>
-                <br /> Delivered to Your Door
+                <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Tvarit</span>
+                <br /> Authentic Indian Cuisine
               </h1>
               <p className="text-lg md:text-xl mb-8 text-gray-700">
                 Experience the rich flavors of India with fresh, pre-measured ingredients and easy-to-follow recipes delivered right to your home.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg" onClick={() => {
-                  document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
-                }}>
-                  Join Waitlist
-                </Button>
                 <Button variant="outline" size="lg" className="text-lg" asChild>
-                  <Link href="/menu"><span>Browse Recipes</span></Link>
+                  <Link href="/menu"><span>Browse Menu</span></Link>
                 </Button>
               </div>
             </div>
             <div className="lg:w-1/2 relative">
               <div className="relative rounded-lg overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1585937421612-70a008356c36"
+                  src="https://images.unsplash.com/photo-1585937421612-70a008356c36?auto=format&fit=crop&w=1200&q=80"
                   alt="Indian Cuisine"
                   className="w-full h-auto object-cover"
                 />
@@ -120,7 +42,7 @@ export default function LandingPage() {
       {/* How It Works */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How Spice Box Works</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">How Tvarit Works</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="bg-gradient-to-br from-amber-50 to-white">
@@ -140,9 +62,9 @@ export default function LandingPage() {
                 <div className="rounded-full bg-amber-100 w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                   <span className="text-2xl font-bold text-amber-600">2</span>
                 </div>
-                <h3 className="text-xl font-semibold text-center mb-2">We Deliver Ingredients</h3>
+                <h3 className="text-xl font-semibold text-center mb-2">Customize Your Order</h3>
                 <p className="text-gray-600 text-center">
-                  We deliver pre-measured ingredients right to your door, with everything you need.
+                  Select number of servings and customize ingredients based on what you have.
                 </p>
               </CardContent>
             </Card>
@@ -162,176 +84,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Featured Dishes Preview */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Featured Dishes</h2>
-          <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-            We'll be launching with a selection of authentic Indian dishes, freshly prepared with high-quality ingredients and traditional spices.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Dish previews */}
-            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div onClick={() => window.location.href = '/recipe/1'} className="cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398"
-                  alt="Butter Chicken"
-                  className="w-full h-48 object-cover"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-xl font-semibold mb-2">Butter Chicken</h3>
-                  <p className="text-gray-600 text-sm mb-4">
-                    Rich and creamy curry with tender chicken in a mildly spiced tomato sauce.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="text-orange-600 font-semibold">₹399.00</div>
-                    <Button variant="outline" size="sm" onClick={(e) => {
-                      e.stopPropagation();
-                      window.location.href = '/recipe/1';
-                    }}>View Recipe</Button>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-            
-            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div onClick={() => window.location.href = '/recipe/2'} className="cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc"
-                  alt="Masala Dosa"
-                  className="w-full h-48 object-cover"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-xl font-semibold mb-2">Masala Dosa</h3>
-                  <p className="text-gray-600 text-sm mb-4">
-                    Crisp fermented rice pancake stuffed with spiced potato filling.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="text-orange-600 font-semibold">₹149.00</div>
-                    <Button variant="outline" size="sm" onClick={(e) => {
-                      e.stopPropagation();
-                      window.location.href = '/recipe/2';
-                    }}>View Recipe</Button>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-            
-            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div onClick={() => window.location.href = '/recipe/3'} className="cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6"
-                  alt="Paneer Tikka"
-                  className="w-full h-48 object-cover"
-                />
-                <CardContent className="p-4">
-                  <h3 className="text-xl font-semibold mb-2">Paneer Tikka</h3>
-                  <p className="text-gray-600 text-sm mb-4">
-                    Chunks of cottage cheese marinated with spices and grilled to perfection.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="text-orange-600 font-semibold">₹249.00</div>
-                    <Button variant="outline" size="sm" onClick={(e) => {
-                      e.stopPropagation();
-                      window.location.href = '/recipe/3';
-                    }}>View Recipe</Button>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Waitlist Section */}
-      <section id="waitlist" className="py-16 md:py-24 bg-gradient-to-br from-amber-600 to-orange-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Join Our Waitlist</h2>
-            <p className="text-lg mb-8 text-amber-100">
-              Be the first to know when we launch! Sign up for our waitlist and get early access.
-            </p>
-            
-            {isSubmitted ? (
-              <div className="bg-white/20 backdrop-blur-sm p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold mb-4">Thank You!</h3>
-                <p className="mb-6">
-                  You're on the list! We'll notify you when Spice Box launches.
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="bg-white text-orange-600 hover:bg-amber-50"
-                  onClick={() => setIsSubmitted(false)}
-                >
-                  Join with another email
-                </Button>
-              </div>
-            ) : (
-              <Card className="bg-white/10 backdrop-blur-sm border-none">
-                <CardContent className="pt-6">
-                  <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white">Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Your name" {...field} className="bg-white/20 text-white placeholder:text-amber-100 border-amber-300" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white">Email</FormLabel>
-                            <FormControl>
-                              <Input placeholder="your@email.com" {...field} className="bg-white/20 text-white placeholder:text-amber-100 border-amber-300" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white">Phone (Optional)</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Your phone number" {...field} className="bg-white/20 text-white placeholder:text-amber-100 border-amber-300" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <Button 
-                        type="submit" 
-                        className="w-full bg-white text-orange-600 hover:bg-amber-50"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? "Processing..." : "Join Waitlist"}
-                      </Button>
-                    </form>
-                  </Form>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-400 py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-white mb-6">Spice Box</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">Tvarit</h2>
             <p className="mb-6">Premium Indian meal kits delivered to your door</p>
             <div className="flex justify-center space-x-4 mb-8">
               <a href="#" className="text-gray-400 hover:text-white">
@@ -353,7 +110,7 @@ export default function LandingPage() {
                 </svg>
               </a>
             </div>
-            <p>© 2025 Spice Box. All rights reserved.</p>
+            <p>© 2025 Tvarit. All rights reserved.</p>
           </div>
         </div>
       </footer>
